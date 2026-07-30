@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "go-road-backend/internal/grpc/pb/common";
+
+message PaginationRequest {
+  string cursor = 1;
+  int32 limit = 2;
+}
+
+message PaginationResponse {
+  string cursor = 1;
+  bool has_more = 2;
+  int64 total = 3;
+}
+
+message Empty {}
+
+message ErrorResponse {
+  string code = 1;
+  string message = 2;
+}
+
+message Position {
+  double lat = 1;
+  double lng = 2;
+  double speed = 3;
+  double heading = 4;
+  int32 battery = 5;
+  string timestamp = 6;
+}
+
+message RiderPosition {
+  string user_id = 1;
+  string room_id = 2;
+  double lat = 3;
+  double lng = 4;
+  double speed = 5;
+  double heading = 6;
+  int32 battery = 7;
+  string timestamp = 8;
+}
+
+message NotificationPayload {
+  string user_id = 1;
+  string title = 2;
+  string body = 3;
+  string type = 4;
+  string data_json = 5;
+}

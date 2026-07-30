@@ -1,0 +1,117 @@
+# ============================================
+# Go
+# ============================================
+go-road-backend/tmp/
+go-road-backend/vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go-road-backend/bin/
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.venv/
+venv/
+env/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+*.coverage
+.coverage.data
+
+# ============================================
+# Flutter / Dart
+# ============================================
+go_road_app_flutter/.dart_tool/
+go_road_app_flutter/.packages
+go_road_app_flutter/.pub/
+go_road_app_flutter/build/
+go_road_app_flutter/.flutter-plugins
+go_road_app_flutter/.flutter-plugins-dependencies
+go_road_app_flutter/*.iml
+go_road_app_flutter/.idea/
+go_road_app_flutter/pubspec.lock
+go_road_app_flutter/ios/Pods/
+go_road_app_flutter/ios/.symlinks/
+go_road_app_flutter/android/.gradle/
+go_road_app_flutter/android/local.properties
+go_road_app_flutter/android/app/build/
+go_road_app_flutter/coverage/
+
+# ============================================
+# Node.js / Next.js
+# ============================================
+go-road-admin/node_modules/
+go-road-admin/.next/
+go-road-admin/out/
+go-road-admin/.env.local
+go-road-admin/.env
+go-road-admin/coverage/
+go-road-admin/.nyc_output/
+go-road-admin/*.tsbuildinfo
+go-road-admin/next-env.d.ts
+npm-debug.log*
+
+# ============================================
+# Docker
+# ============================================
+.docker/
+*.log
+
+# ============================================
+# Environment & Secrets
+# ============================================
+.env
+.env.local
+.env.production
+.env.development
+*.key
+*.pem
+*.cert
+**/service-account.json
+**/credentials.json
+
+# ============================================
+# IDE
+# ============================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# OS
+# ============================================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# ============================================
+# Monitoring / Temp
+# ============================================
+monitoring/grafana-data/
+monitoring/prometheus-data/
+monitoring/loki-data/
+*.pid
+*.seed

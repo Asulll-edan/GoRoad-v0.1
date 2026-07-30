@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package ai_service;
+
+option go_package = "go-road-backend/internal/grpc/pb/ai_service";
+
+service AIService {
+    rpc ChatStream(ChatRequest) returns (stream ChatResponse);
+    rpc GenerateItinerary(ItineraryRequest) returns (ItineraryResponse);
+    rpc EstimateCost(CostEstimationRequest) returns (CostEstimationResponse);
+    rpc AdviseRoute(RouteAdviceRequest) returns (RouteAdviceResponse);
+    rpc GeneratePackingList(PackingListRequest) returns (PackingListResponse);
+    rpc AdviseSafety(SafetyRequest) returns (SafetyResponse);
+    rpc RecommendPOI(POIRecommendRequest) returns (POIRecommendResponse);
+}
+
+message ChatRequest {
+    string user_id = 1;
+    string room_id = 2;
+    string message = 3;
+    repeated ContextMessage context = 4;
+}
+
+message ContextMessage {
+    string role = 1;
+    string content = 2;
+}
+
+message ChatResponse {
+    string content = 1;
+    bool is_final = 2;
+}
+
+message ItineraryRequest {
+    string route_id = 1;
+    string start_location = 2;
+    string end_location = 3;
+    int32 duration_days = 4;
+    int32 rider_count = 5;
+    repeated string motor_ids = 6;
+    repeated string preferences = 7;
+}
+
+message ItineraryResponse {
+    string itinerary_json = 1;
+    string cached = 2;
+}
+
+message CostEstimationRequest {
+    string route_id = 1;
+    repeated string motor_ids = 2;
+    int32 rider_count = 3;
+    int32 duration_days = 4;
+    string fuel_type = 5;
+}
+
+message CostEstimationResponse {
+    string estimate_json = 1;
+    string cached = 2;
+}
+
+message RouteAdviceRequest {
+    string origin = 1;
+    string destination = 2;
+    repeated string waypoints = 3;
+    repeated string preferences = 4;
+}
+
+message RouteAdviceResponse {
+    string advice_json = 1;
+}
+
+message PackingListRequest {
+    int32 duration_days = 1;
+    string weather_condition = 2;
+    string touring_type = 3;
+}
+
+message PackingListResponse {
+    string packing_list_json = 1;
+}
+
+message SafetyRequest {
+    string route_id = 1;
+    string weather_condition = 2;
+    int32 rider_count = 3;
+    string skill_level = 4;
+}
+
+message SafetyResponse {
+    string advice_json = 1;
+}
+
+message POIRecommendRequest {
+    double lat = 1;
+    double lng = 2;
+    double radius_km = 3;
+    repeated string types = 4;
+    string route_id = 5;
+}
+
+message POIRecommendResponse {
+    string pois_json = 1;
+    string cached = 2;
+}

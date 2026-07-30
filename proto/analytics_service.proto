@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package analytics_service;
+
+option go_package = "go-road-backend/internal/grpc/pb/analytics_service";
+
+service AnalyticsService {
+    rpc ComputeRiderStats(RiderStatsRequest) returns (RiderStatsResponse);
+    rpc ComputeLeaderboard(LeaderboardRequest) returns (LeaderboardResponse);
+    rpc EvaluateBadges(BadgeEvalRequest) returns (BadgeEvalResponse);
+    rpc GenerateReport(ReportRequest) returns (ReportResponse);
+    rpc ComputeRoomStats(RoomStatsRequest) returns (RoomStatsResponse);
+    rpc ComputeFuelAnalytics(FuelAnalyticsRequest) returns (FuelAnalyticsResponse);
+    rpc ComputeExpenseSummary(ExpenseSummaryRequest) returns (ExpenseSummaryResponse);
+    rpc GetAdminDashboard(AdminDashRequest) returns (AdminDashResponse);
+}
+
+message RiderStatsRequest {
+    string user_id = 1;
+    bool force_refresh = 2;
+}
+
+message RiderStatsResponse {
+    string stats_json = 1;
+    string cached = 2;
+}
+
+message LeaderboardRequest {
+    string period = 1;
+    int32 limit = 2;
+    string cursor = 3;
+}
+
+message LeaderboardResponse {
+    string leaderboard_json = 1;
+    string cursor = 2;
+    bool has_more = 3;
+}
+
+message BadgeEvalRequest {
+    string user_id = 1;
+    string room_id = 2;
+    string touring_data_json = 3;
+}
+
+message BadgeEvalResponse {
+    repeated string new_badge_codes = 1;
+    string badges_json = 2;
+}
+
+message ReportRequest {
+    string type = 1;
+    string params_json = 2;
+    string format = 3;
+}
+
+message ReportResponse {
+    string report_url = 1;
+    string report_data_json = 2;
+}
+
+message RoomStatsRequest {
+    string room_id = 1;
+}
+
+message RoomStatsResponse {
+    string stats_json = 1;
+}
+
+message FuelAnalyticsRequest {
+    string user_id = 1;
+    string motor_id = 2;
+    int32 months = 3;
+}
+
+message FuelAnalyticsResponse {
+    string analytics_json = 1;
+}
+
+message ExpenseSummaryRequest {
+    string user_id = 1;
+    string room_id = 2;
+    string period = 3;
+}
+
+message ExpenseSummaryResponse {
+    string summary_json = 1;
+}
+
+message AdminDashRequest {
+    string period = 1;
+}
+
+message AdminDashResponse {
+    string dashboard_json = 1;
+}

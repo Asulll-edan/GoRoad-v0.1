@@ -1,0 +1,91 @@
+version: "3.9"
+
+x-shared: &shared
+  restart: unless-stopped
+  networks:
+    - goroad-network
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  redis:
+    ports:
+      - "6379:6379"
+
+  nats:
+    ports:
+      - "4222:4222"
+
+  minio:
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  go-api:
+    ports:
+      - "8080:8080"
+    environment:
+      APP_ENV: development
+
+  go-ws:
+    ports:
+      - "8081:8081"
+    environment:
+      APP_ENV: development
+
+  go-worker:
+    environment:
+      APP_ENV: development
+
+  py-ai-service:
+    ports:
+      - "50051:50051"
+    environment:
+      APP_ENV: development
+    volumes:
+      - ./py-ai-service:/app
+
+  py-analytics-service:
+    ports:
+      - "50052:50052"
+    environment:
+      APP_ENV: development
+    volumes:
+      - ./py-analytics-service:/app
+
+  py-data-pipeline:
+    environment:
+      APP_ENV: development
+    volumes:
+      - ./py-data-pipeline:/app
+
+  admin:
+    ports:
+      - "3000:3000"
+    environment:
+      APP_ENV: development
+    volumes:
+      - ./go-road-admin:/app
+
+  livekit:
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+
+  osrm:
+    ports:
+      - "5000:5000"
+
+  prometheus:
+    ports:
+      - "9090:9090"
+
+  grafana:
+    ports:
+      - "3001:3000"
+
+networks:
+  goroad-network:
+    driver: bridge

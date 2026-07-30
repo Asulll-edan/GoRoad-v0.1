@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  postgres_test:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sandiandasalah
+      POSTGRES_DB: goroad_test
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis_test:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nats_test:
+    image: nats:2-alpine
+    ports:
+      - "4223:4222"
+    command: ["-js"]
+
+  go-api-test:
+    build:
+      context: ./go-road-backend
+      dockerfile: ../docker/Dockerfile.go
+      target: builder
+    working_dir: /app
+    command: go test ./... -cover -race -timeout 120s
+    environment:
+      DB_HOST: postgres_test
+      DB_PORT: "5432"
+      DB_USER: postgres
+      DB_PASSWORD: sandiandasalah
+      DB_NAME: goroad_test
+      REDIS_URL: redis_test:6379
+      NATS_URL: nats://nats_test:4222
+      JWT_SECRET: test-secret
+    depends_on:
+      postgres_test:
+        condition: service_healthy
+      redis_test:
+        condition: service_healthy
+      nats_test:
+        condition: service_started
+
+  py-ai-test:
+    build:
+      context: ./py-ai-service
+      dockerfile: Dockerfile
+    working_dir: /app
+    command: pytest tests/ -v --cov=app --cov-report=term
+    environment:
+      APP_ENV: test
+      REDIS_URL: redis://redis_test:6379/15
+    depends_on:
+      redis_test:
+        condition: service_healthy

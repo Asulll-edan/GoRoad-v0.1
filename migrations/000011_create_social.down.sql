@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS post_comments;
+DROP TABLE IF EXISTS post_likes;
+DROP TABLE IF EXISTS touring_posts;
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS user_blocks;
+DROP TABLE IF EXISTS user_follows;
+DROP TABLE IF EXISTS user_badges;
+DROP TABLE IF EXISTS badges;

@@ -1,0 +1,33 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: go-api
+    static_configs:
+      - targets: ["go-api:8080"]
+    metrics_path: /metrics
+
+  - job_name: go-ws
+    static_configs:
+      - targets: ["go-ws:8081"]
+    metrics_path: /metrics
+
+  - job_name: py-ai
+    static_configs:
+      - targets: ["py-ai-service:8000"]
+    metrics_path: /metrics
+
+  - job_name: py-analytics
+    static_configs:
+      - targets: ["py-analytics-service:8000"]
+    metrics_path: /metrics
+
+  - job_name: nats
+    static_configs:
+      - targets: ["nats:8222"]
+    metrics_path: /metrics
+
+  - job_name: postgres
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
