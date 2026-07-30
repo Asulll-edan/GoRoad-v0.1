@@ -3,31 +3,31 @@
   <h1>GoRoad</h1>
   <p><strong>platform komunitas touring motor</strong></p>
   <br/>
-
   <p>
-    <img src="https://img.shields.io/badge/Go-1.23-00ADD8?style=flat&logo=go" alt="Go"/>
-    <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python" alt="Python"/>
-    <img src="https://img.shields.io/badge/Flutter-3.38-02569B?style=flat&logo=flutter" alt="Flutter"/>
-    <img src="https://img.shields.io/badge/Dart-3.10-0175C2?style=flat&logo=dart" alt="Dart"/>
-    <img src="https://img.shields.io/badge/Next.js-15-000000?style=flat&logo=next.js" alt="Next.js"/>
-    <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql" alt="PostgreSQL"/>
-    <img src="https://img.shields.io/badge/PostGIS-3.4-4169E1?style=flat&logo=postgresql" alt="PostGIS"/>
-    <img src="https://img.shields.io/badge/TimescaleDB-2.17-4169E1?style=flat&logo=timescale" alt="TimescaleDB"/>
+    <img src="https://img.shields.io/badge/Go-1.23-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go"/>
+    <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+    <img src="https://img.shields.io/badge/Flutter-3.38-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"/>
+    <img src="https://img.shields.io/badge/Dart-3.10-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart"/>
+    <img src="https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js"/>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/Redis-7-DC382D?style=flat&logo=redis" alt="Redis"/>
-    <img src="https://img.shields.io/badge/NATS-2.10-27AAE1?style=flat&logo=nats" alt="NATS"/>
-    <img src="https://img.shields.io/badge/MinIO-2026-71C53B?style=flat&logo=minio" alt="MinIO"/>
-    <img src="https://img.shields.io/badge/Docker-2026-2496ED?style=flat&logo=docker" alt="Docker"/>
-    <img src="https://img.shields.io/badge/LiveKit-1.6-00C853?style=flat&logo=livekit" alt="LiveKit"/>
-    <img src="https://img.shields.io/badge/OSRM-5.27-FF6C37?style=flat&logo=openstreetmap" alt="OSRM"/>
-    <img src="https://img.shields.io/badge/Celery-5.4-37814A?style=flat&logo=celery" alt="Celery"/>
-    <img src="https://img.shields.io/badge/gRPC-proto-2446E6?style=flat&logo=grpc" alt="gRPC"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+    <img src="https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis"/>
+    <img src="https://img.shields.io/badge/NATS-2.10-27AAE1?style=for-the-badge&logo=nats&logoColor=white" alt="NATS"/>
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+    <img src="https://img.shields.io/badge/MinIO-71C53B?style=for-the-badge&logo=minio&logoColor=white" alt="MinIO"/>
+    <img src="https://img.shields.io/badge/LiveKit-00C853?style=for-the-badge&logo=livekit&logoColor=white" alt="LiveKit"/>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/status-active-brightgreen?style=flat"/>
-    <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat"/>
-    <img src="https://img.shields.io/badge/PRs-welcome-orange?style=flat"/>
+    <img src="https://img.shields.io/badge/gRPC-2446E6?style=for-the-badge&logo=grpc&logoColor=white" alt="gRPC"/>
+    <img src="https://img.shields.io/badge/Celery-5.4-37814A?style=for-the-badge&logo=celery&logoColor=white" alt="Celery"/>
+    <img src="https://img.shields.io/badge/OSRM-5.27-FF6C37?style=for-the-badge&logo=openstreetmap&logoColor=white" alt="OSRM"/>
+    <img src="https://img.shields.io/badge/PostGIS-3.4-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostGIS"/>
+    <img src="https://img.shields.io/badge/TimescaleDB-2.17-FBB040?style=for-the-badge&logo=timescale&logoColor=white" alt="TimescaleDB"/>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/status-active-brightgreen?style=for-the-badge"/>
+    <img src="https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge"/>
   </p>
   <br/>
 </div>
