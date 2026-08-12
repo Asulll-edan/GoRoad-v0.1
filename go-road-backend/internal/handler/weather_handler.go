@@ -6,6 +6,8 @@ import (
 	"github.com/gofiber/fiber/v3"
 	"go.uber.org/zap"
 
+	domain "go-road-backend/internal/domain/weather"
+	"go-road-backend/internal/repository/redis"
 	"go-road-backend/internal/service"
 )
 
@@ -43,7 +45,7 @@ func handleGetWeatherAlerts(c fiber.Ctx) error {
 
 	alerts, err := svc.GetAlerts(c.Context(), lat, lng)
 	if err != nil {
-		alerts = []interface{}{}
+		alerts = []domain.WeatherAlert{}
 	}
 	return c.JSON(alerts)
 }

@@ -11,7 +11,7 @@ import (
 
 func handleUploadFile(c fiber.Ctx) error {
 	userID := c.Locals("user_id").(string)
-	file, header, err := c.FormFile("file")
+	header, err := c.FormFile("file")
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "file not provided"})
 	}
@@ -19,7 +19,7 @@ func handleUploadFile(c fiber.Ctx) error {
 	logger := c.Locals("logger").(*zap.Logger)
 	svc := service.NewUploadService(postgres.NewUploadRepository(c.Locals("db").(*postgres.Database)), logger)
 
-	f, _ := file.Open()
+	f, _ := header.Open()
 	defer f.Close()
 	uid, _ := uuid.Parse(userID)
 	upload, err := svc.UploadFile(c.Context(), uid, f, header, category)
@@ -29,16 +29,35 @@ func handleUploadFile(c fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(upload)
 }
 
+func handleUploadAvatar(c fiber.Ctx) error {
+	userID := c.Locals("user_id").(string)
+	header, err := c.FormFile("file")
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "avatar not provided"})
+	}
+	logger := c.Locals("logger").(*zap.Logger)
+	svc := service.NewUploadService(postgres.NewUploadRepository(c.Locals("db").(*postgres.Database)), logger)
+
+	f, _ := header.Open()
+	defer f.Close()
+	uid, _ := uuid.Parse(userID)
+	upload, err := svc.UploadAvatar(c.Context(), uid, f, header)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.Status(fiber.StatusCreated).JSON(upload)
+}
+
 func handleUploadPhoto(c fiber.Ctx) error {
 	userID := c.Locals("user_id").(string)
-	file, header, err := c.FormFile("photo")
+	header, err := c.FormFile("photo")
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "photo not provided"})
 	}
 	logger := c.Locals("logger").(*zap.Logger)
 	svc := service.NewUploadService(postgres.NewUploadRepository(c.Locals("db").(*postgres.Database)), logger)
 
-	f, _ := file.Open()
+	f, _ := header.Open()
 	defer f.Close()
 	uid, _ := uuid.Parse(userID)
 	upload, err := svc.UploadPhoto(c.Context(), uid, f, header)

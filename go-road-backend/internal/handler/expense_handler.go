@@ -97,3 +97,25 @@ func handleDeleteExpense(c fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{"message": "expense deleted"})
 }
+
+func handleExpenseSummary(c fiber.Ctx) error {
+	userID := c.Locals("user_id").(string)
+	logger := c.Locals("logger").(*zap.Logger)
+
+	svc := service.NewExpenseService(postgres.NewExpenseRepository(c.Locals("db").(*postgres.Database)), logger)
+	uid, _ := uuid.Parse(userID)
+
+	expenses, _, _, err := svc.List(c.Context(), uid, "", 100)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	total := 0.0
+	byCategory := map[string]float64{}
+	for _, e := range expenses {
+		total += e.Amount
+		byCategory[e.Category] += e.Amount
+	}
+
+	return c.JSON(fiber.Map{"total": total, "by_category": byCategory})
+}

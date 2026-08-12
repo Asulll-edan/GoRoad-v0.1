@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/nats-io/nats.go"
 )
@@ -117,7 +118,7 @@ func (a *LocationAggregator) flush() {
 }
 
 func (a *LocationAggregator) bulkInsert(ctx context.Context, locations []LocationData) error {
-	batch := &pgxpool.Batch{}
+	batch := &pgx.Batch{}
 	for _, loc := range locations {
 		batch.Queue(`
 			INSERT INTO location_tracking (user_id, room_id, lat, lon, speed, heading, altitude, accuracy, battery, recorded_at)

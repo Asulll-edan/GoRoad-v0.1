@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 
 	domain "go-road-backend/internal/domain/admin"
 	authDomain "go-road-backend/internal/domain/auth"
@@ -90,7 +89,7 @@ func (r *adminRepository) ListUsers(ctx context.Context, cursor string, limit in
 		cData, _ := json.Marshal(struct {
 			CreatedAt time.Time `json:"created_at"`
 			ID        string    `json:"id"`
-		}{CreatedAt: last.CreatedAt, ID: last.ID.String()})
+		}{CreatedAt: last.CreatedAt, ID: last.ID})
 		nextCursor = base64.URLEncoding.EncodeToString(cData)
 	}
 	return rows, nextCursor, hasMore, nil
@@ -145,7 +144,7 @@ func (r *adminRepository) ListRooms(ctx context.Context, cursor string, limit in
 		cData, _ := json.Marshal(struct {
 			CreatedAt time.Time `json:"created_at"`
 			ID        string    `json:"id"`
-		}{CreatedAt: last.CreatedAt, ID: last.ID.String()})
+		}{CreatedAt: last.CreatedAt, ID: last.ID})
 		nextCursor = base64.URLEncoding.EncodeToString(cData)
 	}
 	return rows, nextCursor, hasMore, nil

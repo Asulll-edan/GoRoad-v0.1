@@ -7,7 +7,7 @@ const config: Config = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss)$': 'identity-obj-proxy',
   },
-  setupFilesAfterSetup: ['<rootDir>/jest-setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
 }
 
 export default config

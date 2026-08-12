@@ -8,6 +8,7 @@ import (
 	domain "go-road-backend/internal/domain/emergency"
 	"go-road-backend/internal/pkg/pagination"
 	"go-road-backend/internal/repository/postgres"
+	"go-road-backend/internal/repository/redis"
 	"go-road-backend/internal/service"
 )
 
@@ -18,7 +19,7 @@ func handleReportEmergency(c fiber.Ctx) error {
 	}
 	userID, _ := c.Locals("user_id").(string)
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	uid, _ := uuid.Parse(userID)
 	event, err := svc.ReportEmergency(c.Context(), req, uid)
@@ -32,7 +33,7 @@ func handleListEmergencies(c fiber.Ctx) error {
 	params := pagination.ParsePaginationParams(c)
 	status := c.Query("status")
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	events, cursor, hasMore, err := svc.ListEmergencies(c.Context(), params.Cursor, params.Limit, status)
 	if err != nil {
@@ -44,7 +45,7 @@ func handleListEmergencies(c fiber.Ctx) error {
 func handleGetEmergency(c fiber.Ctx) error {
 	id := c.Params("id")
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	eid, _ := uuid.Parse(id)
 	event, err := svc.GetEmergency(c.Context(), eid)
@@ -57,7 +58,7 @@ func handleGetEmergency(c fiber.Ctx) error {
 func handleAcknowledgeEmergency(c fiber.Ctx) error {
 	id, userID := c.Params("id"), c.Locals("user_id").(string)
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	eid, _ := uuid.Parse(id)
 	uid, _ := uuid.Parse(userID)
@@ -70,7 +71,7 @@ func handleAcknowledgeEmergency(c fiber.Ctx) error {
 func handleResolveEmergency(c fiber.Ctx) error {
 	id, userID := c.Params("id"), c.Locals("user_id").(string)
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	eid, _ := uuid.Parse(id)
 	uid, _ := uuid.Parse(userID)
@@ -89,7 +90,7 @@ func handleTriggerSOS(c fiber.Ctx) error {
 	c.Bind().JSON(&req)
 	userID := c.Locals("user_id").(string)
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	uid, _ := uuid.Parse(userID)
 	var rid *uuid.UUID
@@ -108,7 +109,7 @@ func handleTriggerSOS(c fiber.Ctx) error {
 func handleDismissSOS(c fiber.Ctx) error {
 	id, userID := c.Params("id"), c.Locals("user_id").(string)
 	logger := c.Locals("logger").(*zap.Logger)
-	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), logger)
+	svc := service.NewEmergencyService(postgres.NewEmergencyRepository(c.Locals("db").(*postgres.Database)), c.Locals("cache").(redis.CacheRepository), logger)
 
 	sid, _ := uuid.Parse(id)
 	uid, _ := uuid.Parse(userID)

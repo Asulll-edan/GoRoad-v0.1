@@ -68,6 +68,20 @@ type Follow struct {
 	CreatedAt   time.Time `json:"created_at"`
 }
 
+type Report struct {
+	ID           uuid.UUID  `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
+	ReporterID   uuid.UUID  `json:"reporter_id" gorm:"not null"`
+	ReportedType string     `json:"reported_type" gorm:"not null"`
+	ReportedID   uuid.UUID  `json:"reported_id" gorm:"not null"`
+	Reason       string     `json:"reason" gorm:"not null"`
+	Description  string     `json:"description,omitempty"`
+	Status       string     `json:"status" gorm:"not null;default:pending"`
+	ReviewedBy   *uuid.UUID `json:"reviewed_by,omitempty"`
+	ReviewedAt   *time.Time `json:"reviewed_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at"`
+}
+
 type Notification struct {
 	ID        uuid.UUID              `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
 	UserID    uuid.UUID              `json:"user_id" gorm:"not null;index"`

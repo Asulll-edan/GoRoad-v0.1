@@ -80,7 +80,6 @@ func (s *convoyService) UpdateLocation(ctx context.Context, roomID, userID uuid.
 
 	s.cache.SAdd(ctx, fmt.Sprintf("pos:room:%s:all", roomID), userID.String())
 	s.cache.Expire(ctx, fmt.Sprintf("pos:room:%s:all", roomID), 10*time.Second)
-
 	channel := fmt.Sprintf("room:%s:location", roomID)
 	s.cache.Publish(ctx, channel, string(posJSON))
 
@@ -110,7 +109,8 @@ func (s *convoyService) GetLocations(ctx context.Context, roomID uuid.UUID) ([]d
 }
 
 func (s *convoyService) GetTracking(ctx context.Context, roomID uuid.UUID, cursor string, limit int) ([]domain.RiderPosition, string, bool, error) {
-	return s.repo.GetPositionsSince(ctx, roomID, time.Now().Add(-5*time.Minute)), "", false, nil
+	positions, err := s.repo.GetPositionsSince(ctx, roomID, time.Now().Add(-5*time.Minute))
+	return positions, "", false, err
 }
 
 func (s *convoyService) GetPositionsSince(ctx context.Context, roomID uuid.UUID, since time.Time) ([]domain.RiderPosition, error) {

@@ -1,9 +1,15 @@
 package handler
 
 import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+
 	"github.com/gofiber/fiber/v3"
 	"go.uber.org/zap"
 
+	aiDomain "go-road-backend/internal/domain/ai"
+	"go-road-backend/internal/repository/redis"
 	"go-road-backend/internal/service"
 )
 

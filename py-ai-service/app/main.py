@@ -10,10 +10,11 @@ logger = structlog.get_logger()
 app = FastAPI(title="Go Road AI Service", version="3.0.0")
 redis_client = RedisClient()
 
+Instrumentator().instrument(app).expose(app)
+
 @app.on_event("startup")
 async def startup():
     await redis_client.connect()
-    Instrumentator().instrument(app).expose(app)
     logger.info("AI Service started", env=settings.app_env)
 
 @app.on_event("shutdown")

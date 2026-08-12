@@ -13,7 +13,7 @@ type MessageHandler struct {
 }
 
 type NATSPublisher interface {
-	Publish(subject string, data []byte) error
+	Publish(subject string, data interface{}) error
 }
 
 type RedisCache interface {

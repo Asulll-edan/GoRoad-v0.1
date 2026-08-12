@@ -98,7 +98,7 @@ func (s *aiService) hashParams(v interface{}) string {
 	return s.hashString(string(data))
 }
 
-func (s *aiService) hashString(s string) string {
-	h := sha256.Sum256([]byte(s))
+func (s *aiService) hashString(str string) string {
+	h := sha256.Sum256([]byte(str))
 	return hex.EncodeToString(h[:16])
 }

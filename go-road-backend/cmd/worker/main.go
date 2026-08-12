@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/nats-io/nats.go"
@@ -19,7 +18,7 @@ func main() {
 		fx.Provide(
 			config.LoadConfig,
 			func(cfg *config.Config) (*nats.Conn, error) {
-				return nats.Connect(cfg.NATSURL)
+				return nats.Connect(cfg.NATSUrl())
 			},
 			func(cfg *config.Config) (*pgxpool.Pool, error) {
 				return pgxpool.New(context.Background(), cfg.DBDSN())

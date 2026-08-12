@@ -1,7 +1,5 @@
 package ai
 
-import "time"
-
 type ChatRequest struct {
 	UserID  string `json:"user_id"`
 	RoomID  string `json:"room_id"`

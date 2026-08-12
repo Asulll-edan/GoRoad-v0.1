@@ -2,6 +2,7 @@ package event
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 
 	"github.com/nats-io/nats.go"
@@ -13,6 +14,9 @@ type Publisher struct {
 }
 
 func NewPublisher(conn *nats.Conn) (*Publisher, error) {
+	if conn == nil {
+		return nil, errors.New("nil nats connection")
+	}
 	js, err := conn.JetStream()
 	if err != nil {
 		return nil, err
@@ -21,6 +25,9 @@ func NewPublisher(conn *nats.Conn) (*Publisher, error) {
 }
 
 func (p *Publisher) Publish(subject string, data interface{}) error {
+	if p == nil || p.conn == nil {
+		return errors.New("nil publisher")
+	}
 	msg, err := json.Marshal(data)
 	if err != nil {
 		return err

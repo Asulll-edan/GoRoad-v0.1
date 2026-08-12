@@ -246,11 +246,6 @@ func (s *authService) generateAccessToken(user *domain.User) (string, error) {
 }
 
 func (s *authService) generateRefreshToken(ctx context.Context, user *domain.User) (string, error) {
-	tokenBytes := make([]byte, 32)
-	if _, err := uuid.NewRandom(); err != nil {
-		return "", err
-	}
-
 	token := uuid.New().String() + uuid.New().String()
 	hash := sha256.Sum256([]byte(token))
 	tokenHash := hex.EncodeToString(hash[:])

@@ -1,7 +1,9 @@
 package config
 
 import (
-	"github.com/spf13/viper"
+	"os"
+	"strconv"
+	"strings"
 )
 
 type Config struct {
@@ -30,19 +32,47 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	viper.SetDefault("API_PORT", "8080")
-	viper.SetDefault("WS_PORT", "8081")
-	viper.SetDefault("JWT_EXPIRY_HOUR", 72)
-	viper.SetDefault("APP_ENV", "development")
+	cfg := &Config{
+		AppEnv:  getenv("APP_ENV", "development"),
+		APIPort: getenv("API_PORT", "8080"),
+		WSPort:  getenv("WS_PORT", "8081"),
 
-	viper.AutomaticEnv()
+		DBHost:     os.Getenv("DB_HOST"),
+		DBPort:     os.Getenv("DB_PORT"),
+		DBUser:     os.Getenv("DB_USER"),
+		DBPassword: os.Getenv("DB_PASSWORD"),
+		DBName:     os.Getenv("DB_NAME"),
 
-	cfg := &Config{}
-	if err := viper.Unmarshal(cfg); err != nil {
-		return nil, err
+		RedisURL:      os.Getenv("REDIS_URL"),
+		NATSURL:       os.Getenv("NATS_URL"),
+		MinioEndpoint: os.Getenv("MINIO_ENDPOINT"),
+
+		JWTSecret:     os.Getenv("JWT_SECRET"),
+		JWTExpiryHour: getint("JWT_EXPIRY_HOUR", 72),
+
+		GeminiAPIKey: os.Getenv("GEMINI_API_KEY"),
+
+		LiveKitAPIKey:    os.Getenv("LIVEKIT_API_KEY"),
+		LiveKitAPISecret: os.Getenv("LIVEKIT_API_SECRET"),
+		LiveKitHost:      os.Getenv("LIVEKIT_HOST"),
 	}
-
 	return cfg, nil
+}
+
+func getenv(key, fallback string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return fallback
+}
+
+func getint(key string, fallback int) int {
+	if v := os.Getenv(key); v != "" {
+		if n, err := strconv.Atoi(v); err == nil {
+			return n
+		}
+	}
+	return fallback
 }
 
 func (c *Config) IsProduction() bool {
@@ -56,4 +86,11 @@ func (c *Config) DBDSN() string {
 		" password=" + c.DBPassword +
 		" dbname=" + c.DBName +
 		" sslmode=disable TimeZone=Asia/Jakarta"
+}
+
+func (c *Config) NATSUrl() string {
+	if !strings.Contains(c.NATSURL, "://") {
+		return "nats://" + c.NATSURL
+	}
+	return c.NATSURL
 }

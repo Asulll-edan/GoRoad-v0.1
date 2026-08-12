@@ -30,7 +30,7 @@ func main() {
 		fx.Provide(
 			config.LoadConfig,
 			func(cfg *config.Config) (*nats.Conn, error) {
-				return nats.Connect(cfg.NATSURL)
+				return nats.Connect(cfg.NATSUrl())
 			},
 			func(nc *nats.Conn) (*event.Publisher, error) {
 				return event.NewPublisher(nc)

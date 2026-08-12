@@ -7,6 +7,7 @@ import (
 
 	"go-road-backend/internal/pkg/pagination"
 	"go-road-backend/internal/repository/postgres"
+	"go-road-backend/internal/repository/redis"
 	"go-road-backend/internal/service"
 )
 

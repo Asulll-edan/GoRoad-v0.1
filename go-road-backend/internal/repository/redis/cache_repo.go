@@ -16,6 +16,7 @@ type CacheRepository interface {
 	Delete(ctx context.Context, keys ...string) error
 	Exists(ctx context.Context, key string) (bool, error)
 	TTL(ctx context.Context, key string) (time.Duration, error)
+	Expire(ctx context.Context, key string, ttl time.Duration) error
 
 	// Hash operations
 	HSet(ctx context.Context, key string, field string, value interface{}) error
@@ -103,6 +104,10 @@ func (r *cacheRepository) Exists(ctx context.Context, key string) (bool, error) 
 
 func (r *cacheRepository) TTL(ctx context.Context, key string) (time.Duration, error) {
 	return r.client.TTL(ctx, key).Result()
+}
+
+func (r *cacheRepository) Expire(ctx context.Context, key string, ttl time.Duration) error {
+	return r.client.Expire(ctx, key, ttl).Err()
 }
 
 func (r *cacheRepository) HSet(ctx context.Context, key string, field string, value interface{}) error {

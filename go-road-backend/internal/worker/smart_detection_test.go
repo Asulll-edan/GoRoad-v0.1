@@ -6,13 +6,13 @@ import (
 )
 
 func TestHaversineDistance(t *testing.T) {
-	// Jakarta to Bandung ~150km
+	// Jakarta to Bandung great-circle distance ~118km
 	jakartaLat, jakartaLon := -6.2, 106.8
 	bandungLat, bandungLon := -6.9, 107.6
 
 	dist := haversineDistance(jakartaLat, jakartaLon, bandungLat, bandungLon)
-	if math.Abs(dist-150) > 20 {
-		t.Errorf("expected ~150km, got %.2f", dist)
+	if math.Abs(dist-118) > 5 {
+		t.Errorf("expected ~118km, got %.2f", dist)
 	}
 }
 

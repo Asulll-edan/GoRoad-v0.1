@@ -7,7 +7,7 @@ import (
 )
 
 func TestAuthHandlerRegistration(t *testing.T) {
-	app := fiber.New()
+	fiber.New()
 	// Test that auth routes are registered correctly
 	t.Log("Auth handler initialized")
 }

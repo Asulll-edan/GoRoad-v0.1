@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 
 	"go-road-backend/internal/repository/postgres"
+	"go-road-backend/internal/repository/redis"
 	"go-road-backend/internal/service"
 )
 
